@@ -1,0 +1,2 @@
+sencha-grails-asset-pipeline
+============================
