@@ -21,16 +21,16 @@
 
 <body>
 
-    <g:if test="${ SenchaCoffeeAssetFile.senchaAppRootPath == 'app' }">
+    <g:if test="${ SenchaCoffeeAssetFile.senchaAppRootPath == 'deft_coffee' }">
         <h3>CoffeeScript Sencha Asset-Pipeline</h3>
-        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft.js?compile=false" target="_blank">Single File</a><br/>
-        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft.js" target="_blank">Aggregated File</a><br/>
+        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_coffee.js?compile=false" target="_blank">Single File</a><br/>
+        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_coffee.js" target="_blank">Aggregated File</a><br/>
     </g:if>
 
-    <g:if test="${ SenchaJsAssetFile.senchaAppRootPath == 'js' }">
+    <g:if test="${ SenchaJsAssetFile.senchaAppRootPath == 'deft_js' }">
         <h3>JavaScript Sencha Asset-Pipeline</h3>
-        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/jsdeft.js?compile=false" target="_blank">Single File</a><br/>
-        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/jsdeft.js" target="_blank">Aggregated File</a><br/>
+        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_js.js?compile=false" target="_blank">Single File</a><br/>
+        <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_js.js" target="_blank">Aggregated File</a><br/>
     </g:if>
 
 </body>

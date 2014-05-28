@@ -6,7 +6,7 @@ grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 
-	test: false,
+    test: false,
     run: false,
     // configure settings for the test-app JVM, uses the daemon by default
     //test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -45,11 +45,11 @@ grails.project.dependency.resolution = {
         build(":release:3.0.1",":tomcat:7.0.47") {
             export = false
         }
-		compile(":asset-pipeline:1.8.7") {
-			export = false
+        compile(":asset-pipeline:1.8.7") {
+            export = false
         }
-		compile(":coffee-asset-pipeline:1.7.0") {
-			excludes "asset-pipeline"
+        compile(":coffee-asset-pipeline:1.7.0") {
+            excludes "asset-pipeline"
             export = false
         }
     }

@@ -8,48 +8,48 @@ import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes as GA
 
 class SenchaJsAssetFile extends JsAssetFile {
 
-	static processors = JsAssetFile.processors
-	static String senchaAppRootPath = null
-	static Boolean inferRequires = false
-	static SenchaClassDictionary senchaClassDictionary
-	private static File senchaAppRoot = null
+    static processors = JsAssetFile.processors
+    static String senchaAppRootPath = null
+    static Boolean inferRequires = false
+    static SenchaClassDictionary senchaClassDictionary
+    private static File senchaAppRoot = null
 
-	Boolean senchaProcessed = false
+    Boolean senchaProcessed = false
 
-	String directiveForLine(String line) {
-		String result = super.directiveForLine( line )
+    String directiveForLine( String line ) {
+        String result = super.directiveForLine( line )
 
-		if( !senchaProcessed ) {
-			def ctx = SCH.servletContext.getAttribute( GA.APPLICATION_CONTEXT )
-			AssetProcessorService assetProcessorService = ctx.assetProcessorService
-			String assetMapping = assetProcessorService.assetMapping
-			String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
+        if( !senchaProcessed ) {
+            def ctx = SCH.servletContext.getAttribute( GA.APPLICATION_CONTEXT )
+            AssetProcessorService assetProcessorService = ctx.assetProcessorService
+            String assetMapping = assetProcessorService.assetMapping
+            String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
 
-			if( !senchaClassDictionary ) {
-				initClassDictionary( jsAssetsRootPath )
-			}
+            if( !senchaClassDictionary ) {
+                initClassDictionary( jsAssetsRootPath )
+            }
 
-			List senchaRequires = senchaClassDictionary.buildRequiresList( file, jsAssetsRootPath )
-			if( senchaRequires ) {
-				result = result ? "${ result }," : "require "
-				result += senchaRequires.join( ',' )
-			}
+            List senchaRequires = senchaClassDictionary.buildRequiresList( file, jsAssetsRootPath )
+            if( senchaRequires ) {
+                result = result ? "${ result }," : "require "
+                result += senchaRequires.join( ',' )
+            }
 
-			senchaProcessed = true
-		}
+            senchaProcessed = true
+        }
 
-		return result
-	}
+        return result
+    }
 
-	void initClassDictionary( String jsAssetsRootPath ) {
-		if( senchaAppRootPath ) {
-			jsAssetsRootPath += "/${ senchaAppRootPath }"
-		}
+    void initClassDictionary( String jsAssetsRootPath ) {
+        if( senchaAppRootPath ) {
+            jsAssetsRootPath += "/${ senchaAppRootPath }"
+        }
 
-		senchaAppRoot = new File( jsAssetsRootPath )
-		SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
-		dependencyLookup.init()
-		senchaClassDictionary = dependencyLookup.senchaClassDictionary
-  	}
+        senchaAppRoot = new File( jsAssetsRootPath )
+        SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
+        dependencyLookup.init()
+        senchaClassDictionary = dependencyLookup.senchaClassDictionary
+    }
 
 }

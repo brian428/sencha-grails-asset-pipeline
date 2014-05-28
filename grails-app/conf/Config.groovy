@@ -1,9 +1,3 @@
-import asset.pipeline.coffee.CoffeeAssetFile
-import asset.pipeline.coffee.CoffeeScriptProcessor
-import asset.pipeline.sencha.SenchaCoffeeAssetFile
-import asset.pipeline.sencha.SenchaCoffeeScriptProcessor
-import asset.pipeline.sencha.SenchaCoffeeScriptProcessor
-import asset.pipeline.sencha.SenchaJsAssetFile
 
 // configuration for plugin testing - will not be included in the plugin zip
 
@@ -32,5 +26,5 @@ log4j = {
 Relative path from assets/javascripts where the Sencha application is located. e.g. 'assets/javascripts/app' would
 mean this value should be set to 'app'.
 */
-//grails.assets.sencha.appRootPath = "js"
-grails.assets.sencha.appRootPath = "app"
+grails.assets.sencha.appRootPath = "deft_js"
+//grails.assets.sencha.appRootPath = "deft_coffee"
