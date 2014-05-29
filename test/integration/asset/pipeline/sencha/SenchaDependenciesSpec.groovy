@@ -63,6 +63,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
     private def isIncludedBefore( String basePath, String firstFile, String secondFile, dependencyList ) {
         String firstFilePath = basePath ? "${ basePath }/${ firstFile }" : firstFile
         String secondFilePath = basePath ? "${ basePath }/${ secondFile }" : secondFile
+        println "Checking that ${ firstFilePath } is loaded before ${secondFilePath }"
         return dependencyList.findIndexOf{ it.path == firstFilePath } < dependencyList.findIndexOf{ it.path == secondFilePath }
     }
 
