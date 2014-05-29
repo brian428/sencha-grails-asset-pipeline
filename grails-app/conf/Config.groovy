@@ -26,5 +26,5 @@ log4j = {
 Relative path from assets/javascripts where the Sencha application is located. e.g. 'assets/javascripts/app' would
 mean this value should be set to 'app'.
 */
-grails.assets.sencha.appRootPath = "deft_js"
-//grails.assets.sencha.appRootPath = "deft_coffee"
+//grails.assets.sencha.appRootPath = "deft_js"
+grails.assets.sencha.appRootPath = "deft_coffee"

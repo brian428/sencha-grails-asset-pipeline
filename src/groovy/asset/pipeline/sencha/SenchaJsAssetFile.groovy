@@ -52,4 +52,9 @@ class SenchaJsAssetFile extends JsAssetFile {
         senchaClassDictionary = dependencyLookup.senchaClassDictionary
     }
 
+    static void reset() {
+        senchaAppRootPath = null
+        senchaClassDictionary = null
+  	}
+
 }

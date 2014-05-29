@@ -8,6 +8,10 @@ import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes as GA
 class SenchaCoffeeAssetFile extends CoffeeAssetFile {
 
 	static processors = CoffeeAssetFile.processors
+    static final contentType = CoffeeAssetFile.contentType
+	static extensions = CoffeeAssetFile.extensions
+	static final String compiledExtension = CoffeeAssetFile.compiledExtension
+
 	static String senchaAppRootPath = null
 	static Boolean inferRequires = false
 	static SenchaClassDictionary senchaClassDictionary
@@ -50,6 +54,11 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
 		SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
 		dependencyLookup.init()
 		senchaClassDictionary = dependencyLookup.senchaClassDictionary
+  	}
+
+    static void reset() {
+        senchaAppRootPath = null
+        senchaClassDictionary = null
   	}
 
 }
