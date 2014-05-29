@@ -110,8 +110,7 @@ class SenchaDependencyLookup {
         // Remove comments, whitespace, and normalize quotes...
         def jsSource = file.text.replaceAll( "(?s)\\#\\#\\#.*?\\#\\#\\#", "" )
         jsSource = file.text.replaceAll( "(?s)/\\*.*?\\*/", "" )
-        jsSource = jsSource.replaceAll( /\r/, "" )
-        jsSource = jsSource.replaceAll( /\n/, "," )
+        jsSource = jsSource.replaceAll( /\r\n?|\n/, "," )
         jsSource = jsSource.replaceAll( /[\s]/, "" )
         jsSource = jsSource.replaceAll( '"', "'" )
         return jsSource
