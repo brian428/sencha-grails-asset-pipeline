@@ -1,7 +1,5 @@
 import asset.pipeline.AssetHelper
 import asset.pipeline.JsAssetFile
-import asset.pipeline.coffee.CoffeeAssetFile
-import asset.pipeline.sencha.SenchaCoffeeAssetFile
 import asset.pipeline.sencha.SenchaJsAssetFile
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
@@ -27,21 +25,25 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
     def doWithDynamicMethods = { ctx ->
         def grailsApplication = ctx.getBean( GrailsApplication.APPLICATION_ID )
         SenchaJsAssetFile.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
-        SenchaCoffeeAssetFile.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
 
-        // Replace CoffeeAssetFile with SenchaCoffeeAssetFile
-        if( CoffeeAssetFile in AssetHelper.assetSpecs ) {
-            Collections.replaceAll( AssetHelper.assetSpecs, CoffeeAssetFile, SenchaCoffeeAssetFile )
-        }
-        else {
-            AssetHelper.assetSpecs << SenchaCoffeeAssetFile
-        }
         // Replace JsAssetFile with SenchaJsAssetFile
         if( JsAssetFile in AssetHelper.assetSpecs ) {
             Collections.replaceAll( AssetHelper.assetSpecs, JsAssetFile, SenchaJsAssetFile )
         }
         else {
             AssetHelper.assetSpecs << SenchaJsAssetFile
+        }
+
+        if( manager?.hasGrailsPlugin( "coffee-asset-pipeline" ) ) {
+            asset.pipeline.sencha.SenchaCoffeeAssetFile.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
+
+            // Replace CoffeeAssetFile with SenchaCoffeeAssetFile
+            if( asset.pipeline.coffee.CoffeeAssetFile in AssetHelper.assetSpecs ) {
+                Collections.replaceAll( AssetHelper.assetSpecs, asset.pipeline.coffee.CoffeeAssetFile, asset.pipeline.sencha.SenchaCoffeeAssetFile )
+            }
+            else {
+                AssetHelper.assetSpecs << asset.pipeline.sencha.SenchaCoffeeAssetFile
+            }
         }
     }
 
