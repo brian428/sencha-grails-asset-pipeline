@@ -8,9 +8,9 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 ###
 Ext.define( 'Deft.mixin.Injectable',
 	requires: [
-		'Deft.core.Class'
-		'Deft.ioc.Injector'
-		'Deft.log.Logger'
+		'Deft.core.Class',
+		'Deft.ioc.Injector',
+		'Deft.log.Logger',
 		'Deft.util.DeftMixinUtils'
 	]
 

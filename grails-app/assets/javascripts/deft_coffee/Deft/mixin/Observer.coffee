@@ -18,7 +18,7 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 ###
 Ext.define( 'Deft.mixin.Observer',
 	requires: [
-		'Deft.log.Logger'
+		'Deft.log.Logger',
 		'Deft.util.DeftMixinUtils'
 	]
 

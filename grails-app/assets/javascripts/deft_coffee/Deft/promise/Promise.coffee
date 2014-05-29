@@ -71,7 +71,7 @@ call succeeded or failed.
 Ext.define( 'Deft.promise.Promise',
 	alternateClassName: [ 'Deft.Promise' ]
 	requires: [
-		'Deft.promise.Deferred'
+		'Deft.promise.Deferred',
 		'Deft.util.Function'
 	]
 

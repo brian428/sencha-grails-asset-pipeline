@@ -8,9 +8,9 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 ###
 Ext.define( 'Deft.mixin.Controllable',
 	requires: [
-		'Ext.Component'
-		'Deft.core.Class'
-		'Deft.log.Logger'
+		'Ext.Component',
+		'Deft.core.Class',
+		'Deft.log.Logger',
 		'Deft.util.DeftMixinUtils'
 	]
 	

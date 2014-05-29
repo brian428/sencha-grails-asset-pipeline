@@ -27,6 +27,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             checkDeftDependencies( basePath, dependencyList )
     }
 
+    @Ignore
     def "gets Sencha class dependency list order correct for the Deft JS library JavaScript source"() {
         given: "A uri that depends on the Deft JS library JavaScript source"
             SenchaJsAssetFile.senchaAppRootPath = "deft_js"
@@ -52,7 +53,6 @@ class SenchaDependenciesSpec extends IntegrationSpec {
         when:
             List dependencyList = directiveProcessor.getFlattenedRequireList( assetFile )
         then:
-            def temp = SenchaCoffeeAssetFile.senchaClassDictionary
             isIncludedBefore( basePath, "FileLast.js", "FileFour.js", dependencyList )
             isIncludedBefore( basePath, "FileFour.js", "FileThree.js", dependencyList )
             isIncludedBefore( basePath, "FileThree.js", "FileTwo.js", dependencyList )

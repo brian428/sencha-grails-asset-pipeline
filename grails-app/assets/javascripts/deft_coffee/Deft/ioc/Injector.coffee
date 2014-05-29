@@ -110,10 +110,9 @@ Factory function dependency providers can be configured as singletons or prototy
 Ext.define( 'Deft.ioc.Injector',
 	alternateClassName: [ 'Deft.Injector' ]
 	requires: [
-		'Ext.Component'
-
-		'Deft.log.Logger'
-		'Deft.ioc.DependencyProvider'
+		'Ext.Component',
+		'Deft.log.Logger',
+		'Deft.ioc.DependencyProvider',
 		'Deft.util.Function'
 	]
 	singleton: true
