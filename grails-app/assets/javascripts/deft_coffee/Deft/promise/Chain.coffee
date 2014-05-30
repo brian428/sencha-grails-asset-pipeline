@@ -14,7 +14,7 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 Ext.define( 'Deft.promise.Chain',
 	alternateClassName: [ 'Deft.Chain' ]
 	requires: [
-		'Deft.promise.Promise',
+		'Deft.promise.Promise'
 		'Deft.util.Function'
 	]
 	

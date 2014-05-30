@@ -9,8 +9,8 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 ###
 Ext.define( 'Deft.mvc.Observer',
 	requires: [
-		'Deft.core.Class',
-		'Ext.util.Observable',
+		'Deft.core.Class'
+		'Ext.util.Observable'
 		'Deft.util.Function'
 	]
 

@@ -9,10 +9,10 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 ###
 Ext.define( 'Deft.mvc.ComponentSelector',
 	requires: [
-		'Ext.ComponentQuery',
-		'Deft.log.Logger',
-		'Deft.mvc.ComponentSelectorListener',
-		'Deft.util.Function',
+		'Ext.ComponentQuery'
+		'Deft.log.Logger'
+		'Deft.mvc.ComponentSelectorListener'
+		'Deft.util.Function'
 	]
 	
 	constructor: ( config ) ->

@@ -19,7 +19,6 @@ class SenchaDependencyLookup {
         }
 
         iterateFiles( fileList )
-        def temp = true
     }
 
     void iterateFiles( List sourceFiles ) {
@@ -107,12 +106,18 @@ class SenchaDependencyLookup {
     }
 
     String prepareSource( File file ) {
-        // Remove comments, whitespace, and normalize quotes...
+        // Remove CS and JS block comments...
         def jsSource = file.text.replaceAll( "(?s)\\#\\#\\#.*?\\#\\#\\#", "" )
         jsSource = file.text.replaceAll( "(?s)/\\*.*?\\*/", "" )
-        //jsSource = jsSource.replaceAll( /\r\n|\r|\n/, "," )
+
+        // Omit all whitespace and fix any CoffeeScript arrays that omit commas...
+        jsSource = jsSource.replaceAll( /(\t| )/, "" ).replaceAll( /(\r\n?|\n)/, "," )
         jsSource = jsSource.replaceAll( /[\s]/, "" )
+        jsSource = jsSource.replaceAll( /\[,/, "[" ).replaceAll( /,\]/, "]" ).replaceAll( /(,,|,,,)/, "," )
+
+        // Normalize quotes
         jsSource = jsSource.replaceAll( '"', "'" )
+
         return jsSource
     }
 

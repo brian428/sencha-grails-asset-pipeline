@@ -142,13 +142,13 @@ Ext.define( 'Deft.mvc.ViewController',
 	alternateClassName: [ 'Deft.ViewController' ]
 	mixins: [ 'Deft.mixin.Injectable', 'Deft.mixin.Observer' ]
 	requires: [
-		'Deft.core.Class',
-		'Deft.log.Logger',
-		'Deft.mvc.ComponentSelector',
-		'Deft.mixin.Injectable',
-		'Deft.mixin.Observer',
-		'Deft.mvc.Observer',
-		'Deft.util.DeftMixinUtils',
+		'Deft.core.Class'
+		'Deft.log.Logger'
+		'Deft.mvc.ComponentSelector'
+		'Deft.mixin.Injectable'
+		'Deft.mixin.Observer'
+		'Deft.mvc.Observer'
+		'Deft.util.DeftMixinUtils'
 		'Deft.promise.Chain'
 	]
 

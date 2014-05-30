@@ -13,6 +13,29 @@ class SenchaDependenciesSpec extends IntegrationSpec {
         SenchaJsAssetFile.reset()
     }
 
+    def "creates the proper asset file for a CoffeeScript source file"() {
+        given: "A uri that depends on the Deft JS library CoffeeScript source"
+            SenchaCoffeeAssetFile.senchaAppRootPath = "deft_coffee"
+            String contentType        = "application/javascript"
+            File sourceFile = new File( "grails-app/assets/javascripts/deft_coffee.coffee" )
+        when:
+            SenchaCoffeeAssetFile assetFile = AssetHelper.assetForFile( sourceFile )
+        then:
+            assetFile != null
+    }
+
+    def "creates the proper asset file for a JavaScript source file"() {
+        given: "A uri that depends on the Deft JS library CoffeeScript source"
+            SenchaJsAssetFile.senchaAppRootPath = "deft_js"
+            String contentType        = "application/javascript"
+            File sourceFile = new File( "grails-app/assets/javascripts/deft_js.js" )
+        when:
+            JsAssetFile assetFile = AssetHelper.assetForFile( sourceFile )
+        then:
+            assetFile != null
+    }
+
+    @Ignore
     def "gets Sencha class dependency list order correct for the Deft JS library CoffeeScript source"() {
         given: "A uri that depends on the Deft JS library CoffeeScript source"
             SenchaCoffeeAssetFile.senchaAppRootPath = "deft_coffee"
@@ -42,6 +65,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             checkDeftDependencies( basePath, dependencyList )
     }
 
+    @Ignore
     def "gets Sencha class dependency list order correct when using different requires syntaxes and alternate class names"() {
         given: "A uri that depends on files using different requires syntaxes and alternate class names"
             SenchaCoffeeAssetFile.senchaAppRootPath = "requires_syntaxes"
