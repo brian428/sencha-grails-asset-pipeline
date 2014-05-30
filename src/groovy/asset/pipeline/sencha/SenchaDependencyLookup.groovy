@@ -30,7 +30,7 @@ class SenchaDependencyLookup {
     }
 
 
-    void buildLookup( File file ) {
+    List buildLookup( File file ) {
         String fileName = file.name.replaceAll( ".coffee", "" ).replaceAll( ".js", "" )
         String filePath = file.canonicalPath
         MatchResult annotatedRequire = file.text =~ /@require([^\n]*)\n/
@@ -103,6 +103,8 @@ class SenchaDependencyLookup {
                 //println( "File processed: ${ senchaClass.toName() }" )
             }
         }
+
+        return extRequires
     }
 
     String prepareSource( File file ) {
@@ -123,7 +125,7 @@ class SenchaDependencyLookup {
 
     List findRequired( MatchResult requires, int index ) {
         List result = [ ]
-        if( requires && requires.size() > index ) {
+        if( requires?.size() > index ) {
             String normalizedResult = requires[ index ][ 1 ].replaceAll( "'", "" ).trim()
             result = normalizedResult.tokenize( "," )
         }
@@ -132,7 +134,7 @@ class SenchaDependencyLookup {
 
     String findExtends( MatchResult extendsClass, int index ) {
         String result = null
-        if( extendsClass && extendsClass.size() > index ) {
+        if( extendsClass?.size() > index ) {
             result = extendsClass[ index ][ 1 ].replaceAll( "'", "" ).trim()
         }
         return result
@@ -140,7 +142,7 @@ class SenchaDependencyLookup {
 
     List findAlternates( MatchResult alternates, int index ) {
         List result = [ ]
-        if( alternates && alternates.size() > index ) {
+        if( alternates?.size() > index ) {
             String normalizedResult = alternates[ index ][ 1 ].replaceAll( "'", "" ).trim()
             result = normalizedResult.tokenize( "," )
         }
@@ -149,7 +151,7 @@ class SenchaDependencyLookup {
 
     String findDefinedName( List definedName ) {
         String result = null
-        if( definedName && definedName.size() > 0 ) {
+        if( definedName?.size() > 0 ) {
             result = definedName[ 1 ].trim()
         }
         return result
@@ -157,7 +159,7 @@ class SenchaDependencyLookup {
 
     List findCreatedNames( MatchResult createdClasses ) {
         List result = [ ]
-        if( createdClasses.size() ) {
+        if( createdClasses?.size() ) {
             createdClasses.each {
                 result << it[ 1 ].trim()
             }
@@ -167,7 +169,7 @@ class SenchaDependencyLookup {
 
     List findAnnotatedRequires( MatchResult requiredClasses ) {
         List result = [ ]
-        if( requiredClasses.size() ) {
+        if( requiredClasses?.size() ) {
             requiredClasses.each {
                 result << it[ 1 ].replaceAll( "../", "" ).replaceAll( ".js", "" ).trim()
             }
@@ -177,7 +179,7 @@ class SenchaDependencyLookup {
 
     List findOverrides( MatchResult overrides, int index ) {
         List result = [ ]
-        if( overrides && overrides.size() > 0 ) {
+        if( overrides?.size() > 0 ) {
             result = [ overrides[ index ][ 1 ].trim() ]
         }
         return result
