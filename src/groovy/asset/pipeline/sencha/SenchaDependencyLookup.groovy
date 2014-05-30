@@ -9,6 +9,7 @@ class SenchaDependencyLookup {
     File appRoot
     SenchaClassDictionary senchaClassDictionary
     Boolean inferRequires = false
+    Boolean inferOverrides = true
 
     void init() {
         senchaClassDictionary = new SenchaClassDictionary()
@@ -65,9 +66,9 @@ class SenchaDependencyLookup {
                 // Add onto any existing required classes, treating extended classes as required as well.
                 extRequires = extRequires + findRequired( requires, i )
                 extRequires = extRequires + findExtends( extendsClass, i )
-
-                // Unfortunately, requiring overrides can result in cyclic dependencies and break topographic sorting...
-                // extRequires = extRequires + findOverrides( override, i )
+                if( inferOverrides ) {
+                    extRequires = extRequires + findOverrides( override, i )
+                }
 
                 extRequires = extRequires.unique() - null
                 SenchaClass senchaClass = new SenchaClass(
@@ -110,7 +111,7 @@ class SenchaDependencyLookup {
     String prepareSource( File file ) {
         // Remove CS and JS block comments...
         def jsSource = file.text.replaceAll( "(?s)\\#\\#\\#.*?\\#\\#\\#", "" )
-        jsSource = file.text.replaceAll( "(?s)/\\*.*?\\*/", "" )
+        jsSource = jsSource.replaceAll( "(?s)/\\*.*?\\*/", "" )
 
         // Omit all whitespace and fix any CoffeeScript arrays that omit commas...
         jsSource = jsSource.replaceAll( /(\t| )/, "" ).replaceAll( /(\r\n?|\n)/, "," )
@@ -179,7 +180,7 @@ class SenchaDependencyLookup {
 
     List findOverrides( MatchResult overrides, int index ) {
         List result = [ ]
-        if( overrides?.size() > 0 ) {
+        if( overrides?.size() > index ) {
             result = [ overrides[ index ][ 1 ].trim() ]
         }
         return result

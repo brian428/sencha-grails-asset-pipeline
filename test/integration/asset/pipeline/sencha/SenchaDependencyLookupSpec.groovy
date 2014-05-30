@@ -142,6 +142,10 @@ class SenchaDependencyLookupSpec extends IntegrationSpec {
             String senchaClassName2 = "MyApp.test.TestClass2"
             String alternateClassName2 = "MyApp.TestClass2"
             String parentClassName2 = "MyApp.test.ParentTestClass2"
+            String senchaClassName3 = "MyApp.test.TestClass3"
+            String alternateClassName3 = "MyApp.TestClass3"
+            String overrideClassName3 = "MyApp.test.OverrideTestClass3"
+
             String code = """
                 Ext.define('${ senchaClassName }',
                     extend: '${ parentClassName }'
@@ -154,21 +158,44 @@ class SenchaDependencyLookupSpec extends IntegrationSpec {
                     alternateClassName: ['${ alternateClassName2 }']
                     requires: ['MyApp.test.Class3', 'MyApp.test.Class4']
                 )
+
+                ### Commented class should not be processed!
+                Ext.define('MyApp.test.SkippedClass',
+                    extend: 'MyApp.test.SkippedClassParent'
+                    requires: ['MyApp.test.SkippedClass1', 'MyApp.test.SkippedClass2']
+                )
+                ###
+
+                Ext.define('${ senchaClassName3 }',
+                    override: '${ overrideClassName3 }'
+                    alternateClassName: ['${ alternateClassName3 }']
+                    requires: ['MyApp.test.Class5', 'MyApp.test.Class6']
+                )
             """
+
+            List expectedRequiredList = [
+                    parentClassName, parentClassName2, overrideClassName3,
+                    'MyApp.test.Class1', 'MyApp.test.Class2', 'MyApp.test.Class3',
+                    'MyApp.test.Class4', 'MyApp.test.Class5', 'MyApp.test.Class6'
+            ]
+
             File sourceFile = writeTempFile( "test1.js", code )
             SenchaDependencyLookup lookup = createSenchaDependencyLookup()
         when:
             List result = lookup.buildLookup( sourceFile )
         then:
-            result.size() == 6
-            result.each { assert it in [ parentClassName, parentClassName2, 'MyApp.test.Class1', 'MyApp.test.Class2', 'MyApp.test.Class3', 'MyApp.test.Class4' ] }
+            result.size() == 9
+            result.each { assert it in expectedRequiredList }
+            result.each { assert !( it in [ 'MyApp.test.SkippedClassParent', 'MyApp.test.SkippedClass1', 'MyApp.test.SkippedClass2' ] ) }
         when:
             SenchaClassDictionary dictionary = lookup.senchaClassDictionary
             SenchaClass senchaClass = dictionary.senchaClassByQualifiedClassName[ senchaClassName ]
             SenchaClass senchaClass2 = dictionary.senchaClassByQualifiedClassName[ senchaClassName2 ]
+            SenchaClass senchaClass3 = dictionary.senchaClassByQualifiedClassName[ senchaClassName3 ]
         then:
             checkSenchaClass( senchaClass, sourceFile, dictionary, senchaClassName, parentClassName, alternateClassName, true )
             checkSenchaClass( senchaClass2, sourceFile, dictionary, senchaClassName2, parentClassName2, alternateClassName2, true )
+            checkSenchaClass( senchaClass3, sourceFile, dictionary, senchaClassName3, null, alternateClassName3, true )
     }
 
     private checkSenchaClass( SenchaClass senchaClass, File sourceFile, SenchaClassDictionary dictionary, String className, String extendsClass, String altClassName=null, Boolean isMultiClassFile=false ) {
