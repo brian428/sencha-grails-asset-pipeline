@@ -8,7 +8,10 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
     def grailsVersion = "2.0 > *"
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "grails-app/views/index.gsp"
+            "grails-app/views/index.gsp",
+            "grails-app/assets/**",
+            "grails-app/views/**",
+			"web-app/**"
     ]
 
     def title = "Sencha Grails Asset Pipeline Plugin for Sencha Applications"
@@ -34,6 +37,7 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
             AssetHelper.assetSpecs << SenchaJsAssetFile
         }
 
+        // Proceed with CoffeeScript-related logic only if the coffee-asset-pipeline plugin in installed.
         if( manager?.hasGrailsPlugin( "coffee-asset-pipeline" ) ) {
             asset.pipeline.sencha.SenchaCoffeeAssetFile.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
 

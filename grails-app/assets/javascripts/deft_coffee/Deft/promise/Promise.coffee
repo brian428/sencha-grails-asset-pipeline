@@ -151,15 +151,14 @@ Ext.define( 'Deft.promise.Promise',
 		any: ( promisesOrValues ) ->
 			if not ( Ext.isArray( promisesOrValues ) or Deft.Promise.isPromise( promisesOrValues ) )
 				throw new Error( 'Invalid parameter: expected an Array or Promise of an Array.' )
-			return Deft.Promise.some( promisesOrValues, 1 )
-				.then( 
-					( array ) -> 
-						return array[ 0 ]
-					( error ) ->
-						if error instanceof Error and error.message is 'Too few Promises were resolved.'
-							throw new Error( 'No Promises were resolved.' )
-						else
-							throw error
+			return Deft.Promise.some( promisesOrValues, 1 ).then(
+				( array ) ->
+					return array[ 0 ]
+				( error ) ->
+					if error instanceof Error and error.message is 'Too few Promises were resolved.'
+						throw new Error( 'No Promises were resolved.' )
+					else
+						throw error
 				)
 		
 		###*
