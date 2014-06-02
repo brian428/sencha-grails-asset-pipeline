@@ -9,7 +9,7 @@ An add-on for the [ Asset Pipeline Plugin ](http://grails.org/plugin/asset-pipel
 
 <table>
     <tr>
-        <td>**Note:** This plugin requires version asset-pipeline version 1.8.9 or higher! (For more, see [this pull request](https://github.com/bertramdev/asset-pipeline/pull/99)</td>
+        <td><strong>Note:</strong> This plugin requires version asset-pipeline version 1.8.9 or higher! (For more, see [this pull request](https://github.com/bertramdev/asset-pipeline/pull/99)</td>
     </tr>
 </table>
 
