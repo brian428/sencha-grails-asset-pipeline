@@ -23,4 +23,12 @@ It will:
 
 ## Configuration
 
-Other than installing the plugin, the only other config option is to set a `grails.assets.sencha.appRootPath` in your `Config.groovy` file. This lets the plugin know what your Sencha application's root is. It's a relative path from your `assets\javascripts` folder. For example, if your app is located at `grails-app/assets/javascripts/app`, then you'd use `grails.assets.sencha.appRootPath = "app"`. By default, it will treat your `assets\javascripts` folder as the app root.
+Other than installing the plugin, the only other config option is to set a `grails.assets.sencha.appRootPath` in your `Config.groovy` file. This lets the plugin know what your Sencha application's root is. It's a relative path from your `assets/javascripts` folder. 
+
+For example, if your app is located at: 
+`grails-app/assets/javascripts/app`
+
+then you'd set this config option to: 
+`grails.assets.sencha.appRootPath = "app"`
+
+By default, it will treat your `assets/javascripts` folder as the app root.
