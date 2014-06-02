@@ -7,6 +7,13 @@ Grails sencha-grails-asset-pipeline Plugin
 
 An add-on for the [ Asset Pipeline Plugin ](http://grails.org/plugin/asset-pipeline) that understands how to resolve file dependencies for Sencha Ext JS applications.
 
+<table style="color: #9F6000; background-color: #FEEFB3;">
+    <tr>
+        <td>Note: This plugin requires version asset-pipeline version 1.8.9 or higher!</td>
+    </tr>
+</table>
+
+
 ## What It Does
 
 This plugin can handle JavaScript files as well as CoffeeScript (if the [ coffee-asset-pipeline plugin ](http://grails.org/plugin/coffee-asset-pipeline) is installed). It parses the files in your Ext JS application folder (and subfolders) and builds a mapping of file names to Sencha class names, as well as what files each file requires. 
