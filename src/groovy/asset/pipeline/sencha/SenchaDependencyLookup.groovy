@@ -42,8 +42,8 @@ class SenchaDependencyLookup {
         MatchResult requires = jsSource =~ /requires:\[([^]]*)]/
         MatchResult override = jsSource =~ /override:'([^']*)'/
         MatchResult alternates = jsSource =~ /alternateClassName:\[([^]]*)]/
-        MatchResult extSyncRequire = jsSource =~ /Ext\.syncRequire\(\[?([^]]*)]?\)/
-        MatchResult extRequire = jsSource =~ /Ext\.require\(\[?([^]]*)]?\)/
+        MatchResult extSyncRequire = jsSource =~ /Ext\.syncRequire\(\[?([^\]|\)]*)]?\)/
+        MatchResult extRequire = jsSource =~ /Ext\.require\(\[?([^\]|\)]*)]?\)/
 
         // Start building the full set of all required classes for this file...
         List extRequires = findRequired( extRequire, 0 )
