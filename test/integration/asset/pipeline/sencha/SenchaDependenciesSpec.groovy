@@ -35,7 +35,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             assetFile != null
     }
 
-    @Ignore
+    //@Ignore
     def "gets Sencha class dependency list order correct for the Deft JS library CoffeeScript source"() {
         given: "A uri that depends on the Deft JS library CoffeeScript source"
             SenchaCoffeeAssetFile.senchaAppRootPath = "deft_coffee"
@@ -50,7 +50,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             checkDeftDependencies( basePath, dependencyList )
     }
 
-    @Ignore
+    //@Ignore
     def "gets Sencha class dependency list order correct for the Deft JS library JavaScript source"() {
         given: "A uri that depends on the Deft JS library JavaScript source"
             SenchaJsAssetFile.senchaAppRootPath = "deft_js"
@@ -65,7 +65,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             checkDeftDependencies( basePath, dependencyList )
     }
 
-    @Ignore
+    //@Ignore
     def "gets Sencha class dependency list order correct when using different requires syntaxes and alternate class names"() {
         given: "A uri that depends on files using different requires syntaxes and alternate class names"
             SenchaCoffeeAssetFile.senchaAppRootPath = "requires_syntaxes"

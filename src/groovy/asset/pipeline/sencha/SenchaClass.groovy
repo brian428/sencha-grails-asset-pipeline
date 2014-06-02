@@ -1,4 +1,4 @@
-package asset.pipeline.sencha
+package com.briankotek.sencha.dependencies
 
 /**
  * Models a graph vertex for a given Sencha class file.

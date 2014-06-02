@@ -1,4 +1,4 @@
-package asset.pipeline.sencha
+package com.briankotek.sencha.dependencies
 
 import groovy.io.FileType
 

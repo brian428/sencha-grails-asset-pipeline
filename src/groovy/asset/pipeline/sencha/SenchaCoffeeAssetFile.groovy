@@ -2,6 +2,8 @@ package asset.pipeline.sencha
 
 import asset.pipeline.AssetProcessorService
 import asset.pipeline.coffee.CoffeeAssetFile
+import com.briankotek.sencha.dependencies.SenchaClassDictionary
+import com.briankotek.sencha.dependencies.SenchaDependencyLookup
 import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
 import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes as GA
 

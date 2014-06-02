@@ -1,4 +1,4 @@
-package asset.pipeline.sencha
+package com.briankotek.sencha.dependencies
 
 import grails.test.spock.IntegrationSpec
 import spock.lang.Shared
