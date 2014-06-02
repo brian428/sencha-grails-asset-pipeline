@@ -23,7 +23,7 @@ It will:
 * Handle arrays of class names declared in the `requires:` property of a class.
 * When using CoffeeScript, it should properly handle arrays using commas or arrays that omit commas by defining each element on a separate line.
 * Implicitly require any class name declared in the `extend:` or `override:` property of a class.
-* Require class names declared using `Ext.require()` and `Ext.syncRequire()`.
+* Require class names declared using `Ext.require()` and `Ext.syncRequire()`. (Note that in this case, the class names must be declared inline, an cannot be a variable, as there is no way to evaluate what the runtime value will be at parse time.)
 * Require the correct file(s) even when using an alternate class name (defined in the `alternateClassName:` array in a class).
 * Determine the correct required files even when multiple classes are defined in a single file.
 * It should even handle classes required by the `@require()` Sencha Cmd annotation.
