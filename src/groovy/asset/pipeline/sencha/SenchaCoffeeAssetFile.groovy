@@ -1,66 +1,64 @@
 package asset.pipeline.sencha
 
-import asset.pipeline.AssetProcessorService
 import asset.pipeline.coffee.CoffeeAssetFile
 import com.briankotek.sencha.dependencies.SenchaClassDictionary
 import com.briankotek.sencha.dependencies.SenchaDependencyLookup
-import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
-import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes as GA
+import groovy.util.logging.Log4j
 
+@Log4j
 class SenchaCoffeeAssetFile extends CoffeeAssetFile {
 
-	static processors = CoffeeAssetFile.processors
+    static processors = CoffeeAssetFile.processors
     static final contentType = CoffeeAssetFile.contentType
-	static extensions = CoffeeAssetFile.extensions
-	static final String compiledExtension = CoffeeAssetFile.compiledExtension
+    static extensions = CoffeeAssetFile.extensions
+    static final String compiledExtension = CoffeeAssetFile.compiledExtension
 
-	static String senchaAppRootPath = null
-	static Boolean inferRequires = false
-	static SenchaClassDictionary senchaClassDictionary
-	private static File senchaAppRoot = null
+    static String senchaAppRootPath = null
+    static Boolean inferRequires = false
+    static SenchaClassDictionary senchaClassDictionary
+    private static File senchaAppRoot = null
 
-	Boolean senchaProcessed = false
+    Boolean senchaProcessed = false
 
-	String directiveForLine(String line) {
-		String result = super.directiveForLine( line )
+    String directiveForLine( String line ) {
+        String result = super.directiveForLine( line )
 
-		if( !senchaProcessed ) {
-			def ctx = SCH.servletContext.getAttribute( GA.APPLICATION_CONTEXT )
-			AssetProcessorService assetProcessorService = ctx.assetProcessorService
-			String assetMapping = assetProcessorService.assetMapping
-			String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
+        if( !senchaProcessed ) {
+            String assetMapping = SenchaAssetContextHolder.assetMapping
+            String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
 
-			if( !senchaClassDictionary ) {
-				initClassDictionary( jsAssetsRootPath )
-			}
+            if( !senchaClassDictionary ) {
+                initClassDictionary( jsAssetsRootPath )
+            }
 
-			List senchaRequires = senchaClassDictionary.buildRequiresList( file, jsAssetsRootPath )
-			if( senchaRequires ) {
-				result = result ? "${ result }," : "require "
-				result += senchaRequires.join( ',' )
-			}
+            log.debug( "Building requires list for: ${ file }" )
+            List senchaRequires = senchaClassDictionary.buildRequiresList( file, jsAssetsRootPath )
+            if( senchaRequires ) {
+                result = result ? "${ result }," : "require "
+                result += senchaRequires.join( ',' )
+            }
 
-			senchaProcessed = true
-		}
+            senchaProcessed = true
+            log.debug( "Resulting requires list: ${ result }" )
+        }
 
-		return result
-	}
+        return result
+    }
 
-	void initClassDictionary( String jsAssetsRootPath ) {
+    void initClassDictionary( String jsAssetsRootPath ) {
+        if( senchaAppRootPath ) {
+            jsAssetsRootPath += "/${ senchaAppRootPath }"
+        }
 
-		if( senchaAppRootPath ) {
-			jsAssetsRootPath += "/${ senchaAppRootPath }"
-		}
-
-		senchaAppRoot = new File( jsAssetsRootPath )
-		SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
-		dependencyLookup.init()
-		senchaClassDictionary = dependencyLookup.senchaClassDictionary
-  	}
+        senchaAppRoot = new File( jsAssetsRootPath )
+        SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
+        dependencyLookup.init()
+        senchaClassDictionary = dependencyLookup.senchaClassDictionary
+    }
 
     static void reset() {
         senchaAppRootPath = null
         senchaClassDictionary = null
-  	}
+    }
 
 }

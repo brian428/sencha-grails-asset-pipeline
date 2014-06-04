@@ -20,6 +20,7 @@ class SenchaDependencyLookup {
         }
 
         iterateFiles( fileList )
+        return
     }
 
     void iterateFiles( List sourceFiles ) {

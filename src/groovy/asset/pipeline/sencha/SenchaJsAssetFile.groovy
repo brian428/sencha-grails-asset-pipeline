@@ -1,16 +1,18 @@
 package asset.pipeline.sencha
 
-import asset.pipeline.AssetProcessorService
 import asset.pipeline.JsAssetFile
 import com.briankotek.sencha.dependencies.SenchaClassDictionary
 import com.briankotek.sencha.dependencies.SenchaDependencyLookup
-import org.codehaus.groovy.grails.web.context.ServletContextHolder as SCH
-import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes as GA
+import groovy.util.logging.Log4j
 
-
+@Log4j
 class SenchaJsAssetFile extends JsAssetFile {
 
     static processors = JsAssetFile.processors
+    static final contentType = JsAssetFile.contentType
+    static extensions = JsAssetFile.extensions
+    static final String compiledExtension = JsAssetFile.compiledExtension
+
     static String senchaAppRootPath = null
     static Boolean inferRequires = false
     static SenchaClassDictionary senchaClassDictionary
@@ -22,15 +24,14 @@ class SenchaJsAssetFile extends JsAssetFile {
         String result = super.directiveForLine( line )
 
         if( !senchaProcessed ) {
-            def ctx = SCH.servletContext.getAttribute( GA.APPLICATION_CONTEXT )
-            AssetProcessorService assetProcessorService = ctx.assetProcessorService
-            String assetMapping = assetProcessorService.assetMapping
+            String assetMapping = SenchaAssetContextHolder.assetMapping
             String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
 
             if( !senchaClassDictionary ) {
                 initClassDictionary( jsAssetsRootPath )
             }
 
+            log.debug( "Building requires list for: ${ file }" )
             List senchaRequires = senchaClassDictionary.buildRequiresList( file, jsAssetsRootPath )
             if( senchaRequires ) {
                 result = result ? "${ result }," : "require "
@@ -38,6 +39,7 @@ class SenchaJsAssetFile extends JsAssetFile {
             }
 
             senchaProcessed = true
+            log.debug( "Resulting requires list: ${ result }" )
         }
 
         return result
@@ -57,6 +59,6 @@ class SenchaJsAssetFile extends JsAssetFile {
     static void reset() {
         senchaAppRootPath = null
         senchaClassDictionary = null
-  	}
+    }
 
 }

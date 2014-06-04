@@ -9,6 +9,10 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
+    error  'asset.pipeline.sencha',
+           'com.briankotek',
+           'asset.pipeline'
+
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -27,4 +31,4 @@ Relative path from assets/javascripts where the Sencha application is located. e
 mean this value should be set to 'app'.
 */
 //grails.assets.sencha.appRootPath = "deft_js"
-grails.assets.sencha.appRootPath = "deft_coffee"
+//grails.assets.sencha.appRootPath = "deft_coffee"
