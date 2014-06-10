@@ -8,8 +8,11 @@ branches:
 before_script:
      - chmod +x grailsw
      - chmod +x test-project/grailsw
-     - ./test-project/grailsw refresh-dependencies
-     - ./test-project/grailsw war
+     - ./grailsw refresh-dependencies
+     - cd test-project
+     - grailsw refresh-dependencies
+     - grailsw war
+     - cd ..
      
-script: ./grailsw refresh-dependencies
-  && ./grailsw "test-app -integration"
+script: 
+  ./grailsw "test-app -integration"
