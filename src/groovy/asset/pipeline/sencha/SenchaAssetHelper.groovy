@@ -6,10 +6,11 @@ import com.briankotek.sencha.dependencies.SenchaDependencyLookup
 class SenchaAssetHelper {
 
     static Boolean inferRequires = false
-    static String senchaAppRootPath
     static ConfigObject grailsConfig
     static SenchaClassDictionary senchaClassDictionary
-    protected static File senchaAppRoot = null
+    static String senchaAppRootPath
+    static jsAssetsRootPath
+    protected static File senchaAppRoot
 
     static String getAssetMapping() {
         def assetMapping = grailsConfig?.grails?.assets?.mapping ?: "assets"
@@ -23,13 +24,14 @@ class SenchaAssetHelper {
 
     static initClassDictionary() {
         String assetMapping = assetMapping
-        String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
+        jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
+        String newSenchaAppRoot = jsAssetsRootPath
 
         if( SenchaAssetHelper.senchaAppRootPath ) {
-            jsAssetsRootPath += "/${ SenchaAssetHelper.senchaAppRootPath }"
+            newSenchaAppRoot += "/${ senchaAppRootPath }"
         }
 
-        senchaAppRoot = new File( jsAssetsRootPath )
+        senchaAppRoot = new File( newSenchaAppRoot )
 
         SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
         dependencyLookup.init()
