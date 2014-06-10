@@ -14,10 +14,17 @@ class SenchaJsAssetFile extends JsAssetFile {
     static final String compiledExtension = JsAssetFile.compiledExtension
 
     static Boolean inferRequires = false
-    static SenchaClassDictionary senchaClassDictionary
     private static File senchaAppRoot = null
 
     Boolean senchaProcessed = false
+
+    static SenchaClassDictionary getSenchaClassDictionary() {
+        return SenchaAssetHelper.senchaClassDictionary
+    }
+
+    static setSenchaClassDictionary( SenchaClassDictionary senchaClassDictionary ) {
+        SenchaAssetHelper.senchaClassDictionary = senchaClassDictionary
+    }
 
     String directiveForLine( String line ) {
         String result = super.directiveForLine( line )
@@ -57,7 +64,7 @@ class SenchaJsAssetFile extends JsAssetFile {
 
     static void reset() {
         SenchaAssetHelper.senchaAppRootPath = null
-        senchaClassDictionary = null
+        SenchaAssetHelper.senchaClassDictionary = null
     }
 
 }

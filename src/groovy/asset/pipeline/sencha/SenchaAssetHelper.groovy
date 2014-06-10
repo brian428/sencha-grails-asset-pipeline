@@ -1,73 +1,39 @@
 package asset.pipeline.sencha
 
-import org.springframework.context.ApplicationContext
-import org.springframework.context.ApplicationContextAware
-import javax.servlet.ServletContext
+import com.briankotek.sencha.dependencies.SenchaClassDictionary
+import com.briankotek.sencha.dependencies.SenchaDependencyLookup
 
-import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.codehaus.groovy.grails.plugins.GrailsPluginManager
-import org.springframework.context.ApplicationContext
-import org.springframework.context.ApplicationContextAware
+class SenchaAssetHelper {
 
-@Singleton
-class SenchaAssetHelper implements ApplicationContextAware {
-
-    static String senchaAppRootPath = null
-    static ConfigObject rawConfig
-    private ApplicationContext ctx
-    private static final Map<String, Object> TEST_BEANS = [ : ]
-
+    static Boolean inferRequires = false
+    static String senchaAppRootPath
+    static ConfigObject grailsConfig
+    static SenchaClassDictionary senchaClassDictionary
+    protected static File senchaAppRoot = null
 
     static String getAssetMapping() {
-        def assetMapping = getApplicationContext()?.assetProcessorService?.assetMapping
-
-        if( !assetMapping ) {
-            assetMapping = rawConfig?.grails?.assets?.mapping ?: "assets"
-            if( assetMapping.contains( "/" ) ) {
-                String message = "the property [grails.assets.mapping] can only be one level" +
-                        "deep.  For example, 'foo' and 'bar' would be acceptable values, but 'foo/bar' is not"
-                throw new IllegalArgumentException( message )
-            }
+        def assetMapping = grailsConfig?.grails?.assets?.mapping ?: "assets"
+        if( assetMapping.contains( "/" ) ) {
+            String message = "the property [grails.assets.mapping] can only be one level" +
+                    "deep.  For example, 'foo' and 'bar' would be acceptable values, but 'foo/bar' is not"
+            throw new IllegalArgumentException( message )
         }
-
         return assetMapping
     }
 
-    void setApplicationContext( ApplicationContext applicationContext ) {
-        ctx = applicationContext
+    static initClassDictionary() {
+        String assetMapping = assetMapping
+        String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
+
+        if( SenchaAssetHelper.senchaAppRootPath ) {
+            jsAssetsRootPath += "/${ SenchaAssetHelper.senchaAppRootPath }"
+        }
+
+        senchaAppRoot = new File( jsAssetsRootPath )
+
+        SenchaDependencyLookup dependencyLookup = new SenchaDependencyLookup( appRoot: senchaAppRoot, inferRequires: inferRequires )
+        dependencyLookup.init()
+        senchaClassDictionary = dependencyLookup.senchaClassDictionary
     }
 
-    static ApplicationContext getApplicationContext() {
-        getInstance().ctx
-    }
-
-    static Object getBean( String name ) {
-        TEST_BEANS[ name ] ?: getApplicationContext().getBean( name )
-    }
-
-    static GrailsApplication getGrailsApplication() {
-        getBean( 'grailsApplication' )
-    }
-
-    static ConfigObject getConfig() {
-        getGrailsApplication().config
-    }
-
-    static ServletContext getServletContext() {
-        getBean( 'servletContext' )
-    }
-
-    static GrailsPluginManager getPluginManager() {
-        getBean( 'pluginManager' )
-    }
-
-    // For testing
-    static void registerTestBean( String name, bean ) {
-        TEST_BEANS[ name ] = bean
-    }
-
-    // For testing
-    static void unregisterTestBeans() {
-        TEST_BEANS.clear()
-    }
 }

@@ -14,10 +14,17 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
     static final String compiledExtension = CoffeeAssetFile.compiledExtension
 
     static Boolean inferRequires = false
-    static SenchaClassDictionary senchaClassDictionary
     private static File senchaAppRoot = null
 
     Boolean senchaProcessed = false
+
+    static SenchaClassDictionary getSenchaClassDictionary() {
+        return SenchaAssetHelper.senchaClassDictionary
+    }
+
+    static setSenchaClassDictionary( SenchaClassDictionary senchaClassDictionary ) {
+        SenchaAssetHelper.senchaClassDictionary = senchaClassDictionary
+    }
 
     String directiveForLine( String line ) {
         String result = super.directiveForLine( line )

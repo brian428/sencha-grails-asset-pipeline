@@ -2,7 +2,7 @@ eventAssetPrecompileStart = { assetConfig ->
 
     // Populate the raw config so the correct asset paths can be determined later.
     def senchaAssetHelperClass = classLoader.loadClass( "asset.pipeline.sencha.SenchaAssetHelper" )
-    senchaAssetHelperClass.rawConfig = config
+    senchaAssetHelperClass.grailsConfig = config
 
     def assetHelperClass = classLoader.loadClass( "asset.pipeline.AssetHelper" )
     def jsAssetFileClass = classLoader.loadClass( "asset.pipeline.JsAssetFile" )
