@@ -10,8 +10,8 @@ before_script:
      - chmod +x test-project/grailsw
      - ./grailsw refresh-dependencies
      - cd test-project
-     - grailsw refresh-dependencies
-     - grailsw war
+     - ./grailsw refresh-dependencies
+     - ./grailsw war
      - cd ..
      
 script: 
