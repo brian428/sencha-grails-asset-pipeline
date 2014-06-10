@@ -81,6 +81,37 @@ class SenchaDependenciesSpec extends IntegrationSpec {
             isIncludedBefore( null, "FileOne.js", "requires_syntaxes.js", dependencyList )
     }
 
+    def "generates WAR with correctly ordered precompiled assets"() {
+        given: "A generated WAR for a project using the sencha-grails-asset-pipeline plugin"
+            File precompiledFile = new File( "test-project/target/assets/deft_js2.js" )
+        when:
+            String fileContent = precompiledFile.text
+        then:
+            precompiledFile.exists()
+            fileContent.length() > 0
+            checkWarDependencies( fileContent )
+    }
+
+    private def checkDeftDependencies( basePath, dependencyList ) {
+        def result
+        List compareList = deftDependencyCompareList()
+        for( thisComparison in compareList ) {
+            result = isIncludedBefore( basePath, thisComparison.firstFile, thisComparison.secondFile, dependencyList )
+            if( !result ) return false
+        }
+        return true
+    }
+
+    private def checkWarDependencies( String fileContent ) {
+        def result
+        List compareList = deftDependencyCompareList()
+        for( thisComparison in compareList ) {
+            result = isIncludedInCompiledFileBefore( fileContent, thisComparison.firstFile, thisComparison.secondFile )
+            if( !result ) return false
+        }
+        return true
+    }
+
     private def isIncludedBefore( String basePath, String firstFile, String secondFile, dependencyList ) {
         String firstFilePath = basePath ? "${ basePath }/${ firstFile }" : firstFile
         String secondFilePath = basePath ? "${ basePath }/${ secondFile }" : secondFile
@@ -88,30 +119,39 @@ class SenchaDependenciesSpec extends IntegrationSpec {
         return dependencyList.findIndexOf{ it.path == firstFilePath } < dependencyList.findIndexOf{ it.path == secondFilePath }
     }
 
-    private def checkDeftDependencies( basePath, dependencyList ) {
-        isIncludedBefore( basePath, "Deft/util/Function.js", "Deft/log/Logger.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/log/Logger.js", "Deft/ioc/DependencyProvider.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/log/Logger.js", "Deft/ioc/Injector.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/ioc/DependencyProvider.js", "Deft/ioc/Injector.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/event/LiveEventListener.js", "Deft/event/LiveEventBus.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/ioc/Injector.js", "Deft/mixin/Injectable.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/core/Class.js", "Deft/mixin/Injectable.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/log/Logger.js", "Deft/mixin/Injectable.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/util/DeftMixinUtils.js", "Deft/mixin/Observer.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/event/LiveEventBus.js", "Deft/mvc/ComponentSelectorListener.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/mvc/ComponentSelectorListener.js", "Deft/mvc/ComponentSelector.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/core/Class.js", "Deft/mvc/Observer.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/core/Class.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/log/Logger.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/mvc/ComponentSelector.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/mixin/Injectable.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/mixin/Observer.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/mvc/Observer.js", "Deft/mvc/ViewController.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/util/Function.js", "Deft/promise/Consequence.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/promise/Consequence.js", "Deft/promise/Resolver.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/promise/Resolver.js", "Deft/promise/Deferred.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/promise/Deferred.js", "Deft/promise/Promise.js", dependencyList )
-        isIncludedBefore( basePath, "Deft/promise/Promise.js", "Deft/promise/Chain.js", dependencyList )
+    private def isIncludedInCompiledFileBefore( String fileContent, String firstFile, String secondFile ) {
+        String firstClassName = firstFile.replaceAll( "/", "." ).replaceAll( ".js", "" )
+        String secondClassName = secondFile.replaceAll( "/", "." ).replaceAll( ".js", "" )
+        println "Checking that ${ firstClassName } is loaded before ${secondClassName }"
+        return fileContent.indexOf( /Ext.define("${ firstClassName }"/ ) < fileContent.indexOf( /Ext.define("${ secondClassName }"/ )
+    }
+
+    private List deftDependencyCompareList() {
+        List dependencyList = []
+        dependencyList.push( [ firstFile: "Deft/util/Function.js", secondFile: "Deft/log/Logger.js" ] )
+        dependencyList.push( [ firstFile: "Deft/log/Logger.js", secondFile: "Deft/ioc/DependencyProvider.js" ] )
+        dependencyList.push( [ firstFile: "Deft/log/Logger.js", secondFile: "Deft/ioc/Injector.js" ] )
+        dependencyList.push( [ firstFile: "Deft/ioc/DependencyProvider.js", secondFile: "Deft/ioc/Injector.js" ] )
+        dependencyList.push( [ firstFile: "Deft/event/LiveEventListener.js", secondFile: "Deft/event/LiveEventBus.js" ] )
+        dependencyList.push( [ firstFile: "Deft/ioc/Injector.js", secondFile: "Deft/mixin/Injectable.js" ] )
+        dependencyList.push( [ firstFile: "Deft/core/Class.js", secondFile: "Deft/mixin/Injectable.js" ] )
+        dependencyList.push( [ firstFile: "Deft/log/Logger.js", secondFile: "Deft/mixin/Injectable.js" ] )
+        dependencyList.push( [ firstFile: "Deft/util/DeftMixinUtils.js", secondFile: "Deft/mixin/Observer.js" ] )
+        dependencyList.push( [ firstFile: "Deft/event/LiveEventBus.js", secondFile: "Deft/mvc/ComponentSelectorListener.js" ] )
+        dependencyList.push( [ firstFile: "Deft/mvc/ComponentSelectorListener.js", secondFile: "Deft/mvc/ComponentSelector.js" ] )
+        dependencyList.push( [ firstFile: "Deft/core/Class.js", secondFile: "Deft/mvc/Observer.js" ] )
+        dependencyList.push( [ firstFile: "Deft/core/Class.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/log/Logger.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/mvc/ComponentSelector.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/mixin/Injectable.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/mixin/Observer.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/mvc/Observer.js", secondFile: "Deft/mvc/ViewController.js" ] )
+        dependencyList.push( [ firstFile: "Deft/util/Function.js", secondFile: "Deft/promise/Consequence.js" ] )
+        dependencyList.push( [ firstFile: "Deft/promise/Consequence.js", secondFile: "Deft/promise/Resolver.js" ] )
+        dependencyList.push( [ firstFile: "Deft/promise/Resolver.js", secondFile: "Deft/promise/Deferred.js" ] )
+        dependencyList.push( [ firstFile: "Deft/promise/Deferred.js", secondFile: "Deft/promise/Promise.js" ] )
+        dependencyList.push( [ firstFile: "Deft/promise/Promise.js", secondFile: "Deft/promise/Chain.js" ] )
+        return dependencyList
     }
 
 }

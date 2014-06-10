@@ -6,3 +6,4 @@
 /web-app
 *.log
 plugin.xml
+target

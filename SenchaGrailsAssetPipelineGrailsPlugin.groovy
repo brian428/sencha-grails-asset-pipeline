@@ -12,7 +12,8 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
             "grails-app/views/index.gsp",
             "grails-app/assets/**",
             "grails-app/views/**",
-            "web-app/**"
+            "web-app/**",
+            "test-project/**"
     ]
 
     def title = "Sencha Grails Asset Pipeline Plugin for Sencha Applications"
