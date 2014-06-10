@@ -10,8 +10,9 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 
 @Singleton
-class SenchaAssetContextHolder implements ApplicationContextAware {
+class SenchaAssetHelper implements ApplicationContextAware {
 
+    static String senchaAppRootPath = null
     static ConfigObject rawConfig
     private ApplicationContext ctx
     private static final Map<String, Object> TEST_BEANS = [ : ]

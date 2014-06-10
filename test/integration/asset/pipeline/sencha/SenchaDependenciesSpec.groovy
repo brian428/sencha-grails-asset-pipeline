@@ -15,7 +15,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
 
     def "creates the proper asset file for a CoffeeScript source file"() {
         given: "A uri that depends on the Deft JS library CoffeeScript source"
-            SenchaCoffeeAssetFile.senchaAppRootPath = "deft_coffee"
+            SenchaAssetHelper.senchaAppRootPath = "deft_coffee"
             String contentType        = "application/javascript"
             File sourceFile = new File( "grails-app/assets/javascripts/deft_coffee.coffee" )
         when:
@@ -26,7 +26,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
 
     def "creates the proper asset file for a JavaScript source file"() {
         given: "A uri that depends on the Deft JS library CoffeeScript source"
-            SenchaJsAssetFile.senchaAppRootPath = "deft_js"
+            SenchaAssetHelper.senchaAppRootPath = "deft_js"
             String contentType        = "application/javascript"
             File sourceFile = new File( "grails-app/assets/javascripts/deft_js.js" )
         when:
@@ -37,7 +37,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
 
     def "gets Sencha class dependency list order correct for the Deft JS library CoffeeScript source"() {
         given: "A uri that depends on the Deft JS library CoffeeScript source"
-            SenchaCoffeeAssetFile.senchaAppRootPath = "deft_coffee"
+            SenchaAssetHelper.senchaAppRootPath = "deft_coffee"
             String contentType        = "application/javascript"
             File sourceFile = new File( "grails-app/assets/javascripts/deft_coffee.coffee" )
             SenchaCoffeeAssetFile assetFile = AssetHelper.assetForFile( sourceFile )
@@ -51,7 +51,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
 
     def "gets Sencha class dependency list order correct for the Deft JS library JavaScript source"() {
         given: "A uri that depends on the Deft JS library JavaScript source"
-            SenchaJsAssetFile.senchaAppRootPath = "deft_js"
+            SenchaAssetHelper.senchaAppRootPath = "deft_js"
             String contentType        = "application/javascript"
             File sourceFile = new File( "grails-app/assets/javascripts/deft_js.js" )
             JsAssetFile assetFile = AssetHelper.assetForFile( sourceFile )
@@ -65,7 +65,7 @@ class SenchaDependenciesSpec extends IntegrationSpec {
 
     def "gets Sencha class dependency list order correct when using different requires syntaxes and alternate class names"() {
         given: "A uri that depends on files using different requires syntaxes and alternate class names"
-            SenchaCoffeeAssetFile.senchaAppRootPath = "requires_syntaxes"
+            SenchaAssetHelper.senchaAppRootPath = "requires_syntaxes"
             String contentType        = "application/javascript"
             File sourceFile = new File( "grails-app/assets/javascripts/requires_syntaxes.coffee" )
             SenchaCoffeeAssetFile assetFile = AssetHelper.assetForFile( sourceFile )

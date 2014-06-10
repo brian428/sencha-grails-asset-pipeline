@@ -13,7 +13,6 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
     static extensions = CoffeeAssetFile.extensions
     static final String compiledExtension = CoffeeAssetFile.compiledExtension
 
-    static String senchaAppRootPath = null
     static Boolean inferRequires = false
     static SenchaClassDictionary senchaClassDictionary
     private static File senchaAppRoot = null
@@ -24,7 +23,7 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
         String result = super.directiveForLine( line )
 
         if( !senchaProcessed ) {
-            String assetMapping = SenchaAssetContextHolder.assetMapping
+            String assetMapping = SenchaAssetHelper.assetMapping
             String jsAssetsRootPath = "./grails-app/${ assetMapping }/javascripts"
 
             if( !senchaClassDictionary ) {
@@ -46,8 +45,8 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
     }
 
     void initClassDictionary( String jsAssetsRootPath ) {
-        if( senchaAppRootPath ) {
-            jsAssetsRootPath += "/${ senchaAppRootPath }"
+        if( SenchaAssetHelper.senchaAppRootPath ) {
+            jsAssetsRootPath += "/${ SenchaAssetHelper.senchaAppRootPath }"
         }
 
         senchaAppRoot = new File( jsAssetsRootPath )
@@ -57,7 +56,7 @@ class SenchaCoffeeAssetFile extends CoffeeAssetFile {
     }
 
     static void reset() {
-        senchaAppRootPath = null
+        SenchaAssetHelper.senchaAppRootPath = null
         senchaClassDictionary = null
     }
 

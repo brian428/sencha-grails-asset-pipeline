@@ -1,13 +1,13 @@
 eventAssetPrecompileStart = { assetConfig ->
 
     // Populate the raw config so the correct asset paths can be determined later.
-    def senchaAssetContextHolderClass = classLoader.loadClass( "asset.pipeline.sencha.SenchaAssetContextHolder" )
-    senchaAssetContextHolderClass.rawConfig = config
+    def senchaAssetHelperClass = classLoader.loadClass( "asset.pipeline.sencha.SenchaAssetHelper" )
+    senchaAssetHelperClass.rawConfig = config
 
     def assetHelperClass = classLoader.loadClass( "asset.pipeline.AssetHelper" )
     def jsAssetFileClass = classLoader.loadClass( "asset.pipeline.JsAssetFile" )
     def senchaJsAssetFileClass = classLoader.loadClass( "asset.pipeline.sencha.SenchaJsAssetFile" )
-    senchaJsAssetFileClass.senchaAppRootPath = config?.grails?.assets?.sencha?.appRootPath
+    senchaAssetHelperClass.senchaAppRootPath = config?.grails?.assets?.sencha?.appRootPath
 
     // Replace JsAssetFile with SenchaJsAssetFile
     if( jsAssetFileClass in assetHelperClass.assetSpecs ) {
@@ -21,7 +21,6 @@ eventAssetPrecompileStart = { assetConfig ->
     if( pluginManager?.hasGrailsPlugin( "coffee-asset-pipeline" ) ) {
         def coffeeAssetFileClass = classLoader.loadClass( "asset.pipeline.coffee.CoffeeAssetFile" )
         def senchaCoffeeAssetFileClass = classLoader.loadClass( "asset.pipeline.sencha.SenchaCoffeeAssetFile" )
-        senchaCoffeeAssetFileClass.senchaAppRootPath = config?.grails?.assets?.sencha?.appRootPath
 
         // Replace CoffeeAssetFile with SenchaCoffeeAssetFile
         if( coffeeAssetFileClass in assetHelperClass.assetSpecs ) {

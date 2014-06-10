@@ -1,4 +1,4 @@
-<%@ page import="asset.pipeline.sencha.SenchaJsAssetFile" contentType="text/html;charset=UTF-8" %>
+<%@ page import="asset.pipeline.sencha.SenchaAssetHelper" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title></title>
@@ -21,7 +21,7 @@
 
 <body>
 
-    <g:if test="${ SenchaJsAssetFile.senchaAppRootPath == 'deft_js2' }">
+    <g:if test="${ SenchaAssetHelper.senchaAppRootPath == 'deft_js2' }">
         <h3>JavaScript Sencha Asset-Pipeline TEST APP</h3>
         <a href="http://localhost:8080/sencha-pipeline-test/assets/deft_js2.js?compile=false" target="_blank">Single File</a><br/>
         <a href="http://localhost:8080/sencha-pipeline-test/assets/deft_js2.js" target="_blank">Aggregated File</a><br/>

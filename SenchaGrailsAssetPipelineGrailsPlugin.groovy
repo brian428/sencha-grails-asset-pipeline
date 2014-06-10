@@ -1,6 +1,6 @@
 import asset.pipeline.AssetHelper
 import asset.pipeline.JsAssetFile
-import asset.pipeline.sencha.SenchaAssetContextHolder
+import asset.pipeline.sencha.SenchaAssetHelper
 import asset.pipeline.sencha.SenchaJsAssetFile
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
@@ -27,15 +27,9 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
     def license = "APACHE"
     def issueManagement = [ system: "Github", url: "https://github.com/brian428/sencha-grails-asset-pipeline/issues" ]
 
-    def doWithSpring = {
-        senchaAssetContextHolder(SenchaAssetContextHolder) { bean ->
-            bean.factoryMethod = 'getInstance'
-        }
-    }
-
     def doWithDynamicMethods = { ctx ->
         def grailsApplication = ctx.getBean( GrailsApplication.APPLICATION_ID )
-        SenchaJsAssetFile.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
+        SenchaAssetHelper.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
 
         // Replace JsAssetFile with SenchaJsAssetFile
         if( JsAssetFile in AssetHelper.assetSpecs ) {
@@ -50,7 +44,6 @@ class SenchaGrailsAssetPipelineGrailsPlugin {
         if( manager?.hasGrailsPlugin( "coffee-asset-pipeline" ) ) {
             Class coffeeAssetFileClass = Class.forName( "asset.pipeline.coffee.CoffeeAssetFile" )
             Class senchaCoffeeAssetFileClass = Class.forName( "asset.pipeline.sencha.SenchaCoffeeAssetFile" )
-            senchaCoffeeAssetFileClass.senchaAppRootPath = grailsApplication.config?.grails?.assets?.sencha?.appRootPath
 
             // Replace CoffeeAssetFile with SenchaCoffeeAssetFile
             if( coffeeAssetFileClass in AssetHelper.assetSpecs ) {

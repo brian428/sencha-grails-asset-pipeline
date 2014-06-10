@@ -1,4 +1,4 @@
-<%@ page import="asset.pipeline.sencha.SenchaJsAssetFile; asset.pipeline.sencha.SenchaCoffeeAssetFile" contentType="text/html;charset=UTF-8" %>
+<%@ page import="asset.pipeline.sencha.SenchaAssetHelper" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title></title>
@@ -21,13 +21,13 @@
 
 <body>
 
-    <g:if test="${ SenchaCoffeeAssetFile.senchaAppRootPath == 'deft_coffee' }">
+    <g:if test="${ SenchaAssetHelper.senchaAppRootPath == 'deft_coffee' }">
         <h3>CoffeeScript Sencha Asset-Pipeline</h3>
         <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_coffee.js?compile=false" target="_blank">Single File</a><br/>
         <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_coffee.js" target="_blank">Aggregated File</a><br/>
     </g:if>
 
-    <g:if test="${ SenchaJsAssetFile.senchaAppRootPath == 'deft_js' }">
+    <g:if test="${ SenchaAssetHelper.senchaAppRootPath == 'deft_js' }">
         <h3>JavaScript Sencha Asset-Pipeline</h3>
         <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_js.js?compile=false" target="_blank">Single File</a><br/>
         <a href="http://localhost:8080/sencha-grails-asset-pipeline/assets/deft_js.js" target="_blank">Aggregated File</a><br/>
