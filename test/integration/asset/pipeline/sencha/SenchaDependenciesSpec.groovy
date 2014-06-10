@@ -84,10 +84,12 @@ class SenchaDependenciesSpec extends IntegrationSpec {
     def "generates WAR with correctly ordered precompiled assets"() {
         given: "A generated WAR for a project using the sencha-grails-asset-pipeline plugin"
             File precompiledFile = new File( "test-project/target/assets/deft_js2.js" )
+            if( !precompiledFile.exists() ) {
+                throw new Error( "It looks like the generated WAR build for /test-project doesn't exist. You may need to run a 'grails war' in the test-project first, so tests against the precompiled assets can run." )
+            }
         when:
             String fileContent = precompiledFile.text
         then:
-            precompiledFile.exists()
             fileContent.length() > 0
             checkWarDependencies( fileContent )
     }
