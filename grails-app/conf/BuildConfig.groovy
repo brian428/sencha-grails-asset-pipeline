@@ -45,12 +45,11 @@ grails.project.dependency.resolution = {
         build(":release:3.0.1",":tomcat:7.0.47") {
             export = false
         }
-        compile(":asset-pipeline:1.8.9") {
+        compile(":asset-pipeline:1.9.3") {
             export = false
         }
-        compile(":coffee-asset-pipeline:1.7.0") {
+        compile(":coffee-asset-pipeline:1.8.0") {
             excludes "asset-pipeline"
-            export = false
         }
     }
 }

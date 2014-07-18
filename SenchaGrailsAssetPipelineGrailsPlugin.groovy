@@ -5,7 +5,7 @@ import asset.pipeline.sencha.SenchaJsAssetFile
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class SenchaGrailsAssetPipelineGrailsPlugin {
-    def version = "0.1"
+    def version = "1.0.0"
     def grailsVersion = "2.0 > *"
     def pluginExcludes = [
             "grails-app/views/error.gsp",

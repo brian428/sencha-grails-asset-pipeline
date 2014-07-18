@@ -16,14 +16,14 @@ An add-on for the [ Asset Pipeline Plugin ](http://grails.org/plugin/asset-pipel
 
 ## What It Does
 
-This plugin can handle JavaScript files as well as CoffeeScript (if the [ coffee-asset-pipeline plugin ](http://grails.org/plugin/coffee-asset-pipeline) is installed). It parses the files in your Ext JS application folder (and subfolders) and builds a mapping of file names to Sencha class names, as well as what files each file requires. 
+This plugin can handle JavaScript files as well as CoffeeScript (via the bundled [ coffee-asset-pipeline plugin ](http://grails.org/plugin/coffee-asset-pipeline)). It parses the files in your Ext JS application folder (and subfolders) and builds a mapping of file names to Sencha class names, as well as what other files each file requires. 
 
 It will:
 
 * Handle arrays of class names declared in the `requires:` property of a class.
 * When using CoffeeScript, it should properly handle arrays using commas or arrays that omit commas by defining each element on a separate line.
 * Implicitly require any class name declared in the `extend:` or `override:` property of a class.
-* Require class names declared using `Ext.require()` and `Ext.syncRequire()`. (Note that in this case, the class names must be declared inline, and cannot be a variable, as there is no way to evaluate what the runtime value of the variable will be.)
+* Require class names declared using `Ext.require()` and `Ext.syncRequire()`. (Note that required class names must be declared inline, and cannot be a variable, as there is no way to evaluate what the runtime value of the variable will be.)
 * Require the correct file(s) even when using an alternate class name (defined in the `alternateClassName:` array in a class).
 * Determine the correct required files even when multiple classes are defined in a single file.
 * It should even handle classes required by the `@require()` Sencha Cmd annotation.
